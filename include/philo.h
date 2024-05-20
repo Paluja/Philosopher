@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:32:50 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/17 18:22:04 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:49:04 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,26 @@
 # include <stdbool.h>
 # include <inttypes.h>
 # include <stdint.h>
+#include	<limits.h>
+#include	<errno.h>
+
+
+typedef enum	e_opcode
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH,
+}		t_opcode;
+
+
+
 
 typedef	pthread_mutex_t t_mutex;
-
+typedef struct s_table t_table;
 //METETLE COLORES AL PRINTF QUE QUEDA WAPO
 
 
@@ -66,6 +83,14 @@ typedef	struct	s_table
 
 
 void    error_exit(const char *str);
+
+void parser_input(t_table *table, char **av);
+
+void* safe_malloc(size_t bytes);
+void safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data,
+     t_opcode opcode);
+void    safe_mutex_handle(t_mutex *mutex, t_opcode opcode);
+
 
 
 

@@ -42,13 +42,14 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
+LDFLAGS = -lpthread
 RM = rm -f
 AR = ar rcs
 
 # =========================================================================== #
 
 # Sources
-SRC_FILES = main utils parser
+SRC_FILES = main utils parser init safe_controls
 
 #files
 SRCS = 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
@@ -59,12 +60,12 @@ OBJF		=	.cache_exists
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			@$(CC) $(OBJS) -o $(NAME)
+			@$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 			@echo "$(GREEN)$(NAME) compilaoh$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 			@echo "$(YELLOW)Compilando mostro: $(MAGENTA)$< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
+			@$(CC) $(CFLAGS) -c $< -o $@ $^ $(LDFLAGS)
 
 $(OBJF):
 			@mkdir -p $(OBJ_DIR)
