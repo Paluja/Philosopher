@@ -48,7 +48,7 @@ AR = ar rcs
 # =========================================================================== #
 
 # Sources
-SRC_FILES = main
+SRC_FILES = main utils parser
 
 #files
 SRCS = 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
