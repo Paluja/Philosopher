@@ -49,7 +49,7 @@ AR = ar rcs
 # =========================================================================== #
 
 # Sources
-SRC_FILES = main utils parser init safe_controls
+SRC_FILES = main utils parser init safe_controls dinner get_set
 
 #files
 SRCS = 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
@@ -65,8 +65,7 @@ $(NAME):	$(OBJS)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 			@echo "$(YELLOW)Compilando mostro: $(MAGENTA)$< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS) -c $< -o $@ $^ $(LDFLAGS)
-
+			@$(CC) $(CFLAGS) -c $< -o $@
 $(OBJF):
 			@mkdir -p $(OBJ_DIR)
 

@@ -6,11 +6,29 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:50:41 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/20 19:00:34 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:33:50 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+void print_philos(t_table *table)
+{
+    int i;
+    t_philo *philo;
+
+    i = 0;
+    while (i < table->philo_nbr)
+    {
+        philo = table->philos + i;
+        printf("Philo %d\n",philo->id);
+        printf("Meals %ld\n",philo->meals_counter);
+        printf("First fork %d\n",philo->first_fork->fork_id);
+        printf("Second fork %d\n",philo->second_fork->fork_id);
+        i++;
+    }
+}
+
 
 int main(int ac, char **av)
 {
@@ -19,8 +37,8 @@ int main(int ac, char **av)
     if (ac == 5 || ac == 6)
     {
         parser_input(table,av);
-
-        //data_init
+        data_init(table);
+        print_philos(table);
 
         //start_coocking
 
@@ -31,3 +49,4 @@ int main(int ac, char **av)
     }
     return (0);
 }
+
