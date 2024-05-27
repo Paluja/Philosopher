@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:34:11 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/23 19:28:04 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:59:15 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@ void* dinner_simulation(void *data)
 	
 	philo = (t_philo *)data;
 	wait_all_threads(philo->table);
+	while (!simulation_finished(philo->table))
+	{
+		// si esta full
+		if (philo->full) //comprobar si el thread esta asegurado
+			break ;
+		eat(philo);
+
+		sleep(philo); //write_status y precise usleep
+
+		think(philo);
+		
+	}
+	
 
 	return(NULL);
 }
