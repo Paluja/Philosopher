@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:50:41 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/23 17:33:50 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:14:16 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int main(int ac, char **av)
     {
         parser_input(table,av);
         data_init(table);
-        print_philos(table);
-
-        //start_coocking
+        start_coocking(table);
 
         //clean
     }

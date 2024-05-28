@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:32:50 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/23 19:11:51 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:36:13 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ typedef enum	e_time_code
 	MICROSECOND,
 }		t_time_code;
 
+typedef	enum e_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK,
+	DIED,
+}			t_philo_status;
 
 
 
@@ -72,6 +81,7 @@ typedef struct s_philo
 	t_fork	*first_fork;
 	t_fork	*second_fork;
 	pthread_t	thread_id;
+	t_mutex		philo_mutex;
 	t_table		*table;
 }				t_philo;
 
@@ -87,13 +97,33 @@ typedef	struct	s_table
 	bool	end_cocking;
 	bool	all_threads_ok; //para sincronizar los philos
 	t_mutex	table_mutex; //evista los races mientras se esta leyendo la mesa
+	t_mutex	write_mutex;
 	t_fork	*forks;
 	t_philo	*philos;
 }				t_table;
 
+
+# define DEBUG 0
+
+
+// Colorines
+# define RST    "\033[0m"      /* Reset to default color */
+# define RED	"\033[1;31m"   /* Bold Red */
+# define G      "\033[1;32m"   /* Bold Green */
+# define Y      "\033[1;33m"   /* Bold Yellow */
+# define B      "\033[1;34m"   /* Bold Blue */
+# define M      "\033[1;35m"   /* Bold Magenta */
+# define C      "\033[1;36m"   /* Bold Cyan */
+# define W      "\033[1;37m"   /* Bold White */
+
+
 //UTILS
 void    error_exit(const char *str);
 long	gettime(t_time_code time_code);
+void p_usleep(long usec,t_table *table);
+
+//WIRTE	
+void write_status(t_philo_status status, t_philo *philo, bool debug);
 
 //SYNCHRO UTILS
 void wait_all_threads(t_table *table);
@@ -110,10 +140,16 @@ void    safe_mutex_handle(t_mutex *mutex, t_opcode opcode);
 //DATA INIT
 void data_init(t_table *table);
 
+//DINNER
+void start_coocking(t_table *table);
+
+//syncro nosequie
+void wait_all_threads(t_table *table);
+
 //SETTERS AND GETTERS ---> codigo mas leible
 void    set_bool(t_mutex *mutex, bool *dest, bool value);
-bool	get_bool(t_mutex *mutex, bool value);
+bool	get_bool(t_mutex *mutex, bool *value);
 void    set_long(t_mutex *mutex, long *dest, long value);
-bool	get_long(t_mutex *mutex, long value);
-bool simulation_finished(t_table *table);
+long	get_long(t_mutex *mutex, long *value);
+bool	simulation_finished(t_table *table);
 #endif

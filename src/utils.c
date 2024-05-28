@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:50:35 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/23 19:11:07 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:20:23 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,27 @@ long	gettime(t_time_code time_code)
 	else
 		error_exit("Wrong time input");
 	return(LONG_MAX);
+}
+
+void p_usleep(long usec,t_table *table)//  usec/2 =====> rem/2
+{
+	long	start;
+	long	elapsed;
+	long	rem;
+	
+	start = gettime(MICROSECOND);
+	while (usec > gettime(MICROSECOND) - start)
+	{
+		if (simulation_finished(table))
+			break ;
+		elapsed = gettime(MICROSECOND) - start; //el tiempo transcurrido desde que empezo
+		rem = usec - elapsed;
+		if (rem > 1e3)
+			usleep(rem/2);
+		else
+		{
+			while (usec > gettime(MICROSECOND) - start)
+				;
+		}
+	}
 }

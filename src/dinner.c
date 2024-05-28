@@ -6,11 +6,37 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:34:11 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/27 20:59:15 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:40:49 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+static void thinking(t_philo *philo)
+{
+	write_status(THINKING, philo,DEBUG);
+}
+
+static void eat(t_philo *philo)
+{
+//--------------LOCK los tenedores
+	safe_mutex_handle(&philo->first_fork->fork, LOCK);
+	write_status(TAKE_FIRST_FORK, philo, DEBUG);
+	safe_mutex_handle(&philo->second_fork->fork, LOCK);
+	write_status(TAKE_SECOND_FORK, philo, DEBUG);
+//----------- UPDATE MEALS AND WRITE STATUS
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILISECOND));
+	philo->meals_counter++;
+	write_status(EATING, philo, DEBUG);
+	p_usleep(philo->table->time_to_eat, philo->table);
+	if (philo->table->limit_meals > 0
+		&& philo->meals_counter == philo->table->limit_meals)
+		set_bool(&philo->philo_mutex, &philo->full, true);
+//-----------------UNLOCK
+	safe_mutex_handle(&philo->first_fork->fork, UNLOCK);
+	safe_mutex_handle(&philo->second_fork->fork, UNLOCK);
+}
+
 
 void* dinner_simulation(void *data)
 {
@@ -25,27 +51,16 @@ void* dinner_simulation(void *data)
 			break ;
 		eat(philo);
 
-		sleep(philo); //write_status y precise usleep
+		write_status(SLEEPING,philo, DEBUG);
+		p_usleep(philo->table->time_to_sleep,philo->table);
 
-		think(philo);
+		thinking(philo);
 		
 	}
 	
 
 	return(NULL);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //1 crear todoso threads
@@ -82,6 +97,7 @@ void start_coocking(t_table *table)
 	//comprueba que toodos los hilos hayan terminado antes de seguir la ejecucion
 	while (table->philo_nbr > i++)
 		safe_thread_handle(&table->philos[i].thread_id,NULL,NULL,JOIN); 
+	set_bool(&table->table_mutex, &table->end_cocking, true);
 	
 
 	

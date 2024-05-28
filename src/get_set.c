@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:28:40 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/23 18:46:15 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:35:33 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,41 @@
 
 //para evitar estar todo el rato escribiendo lock y unlock
 
-void    set_bool(t_mutex *mutex, bool *dest, bool value)
+void	set_bool(t_mutex *mutex, bool *dest, bool value)
 {
-    safe_mutex_handle(mutex,LOCK);
-    *dest = value;
-    safe_mutex_handle(mutex,UNLOCK);
+	safe_mutex_handle(mutex, LOCK);
+	*dest = value;
+	safe_mutex_handle(mutex, UNLOCK);
 }
 
-bool	get_bool(t_mutex *mutex, bool value)
+bool	get_bool(t_mutex *mutex, bool *value)
 {
-	bool	res;
-    safe_mutex_handle(mutex,LOCK);
-    res = value;
-    safe_mutex_handle(mutex,UNLOCK);
-	return(res);
+	bool	ret;
+
+	safe_mutex_handle(mutex, LOCK);
+	ret = *value;
+	safe_mutex_handle(mutex, UNLOCK);
+	return (ret);
 }
 
-void    set_long(t_mutex *mutex, long *dest, long value)
+long	get_long(t_mutex *mutex, long *value)
 {
-    safe_mutex_handle(mutex,LOCK);
-    *dest = value;
-    safe_mutex_handle(mutex,UNLOCK);
+	long	ret;
+
+	safe_mutex_handle(mutex, LOCK);
+	ret = *value;
+	safe_mutex_handle(mutex, UNLOCK);
+	return (ret);
 }
 
-bool	get_long(t_mutex *mutex, long value)
+void	set_long(t_mutex *mutex, long *dest, long value)
 {
-	long	res;
-    safe_mutex_handle(mutex,LOCK);
-    res = value;
-    safe_mutex_handle(mutex,UNLOCK);
-	return(res);
+	safe_mutex_handle(mutex, LOCK);
+	*dest = value;
+	safe_mutex_handle(mutex, UNLOCK);
 }
 
 bool simulation_finished(t_table *table)
 {
-	return (get_bool(&table->table_mutex, table->end_cocking));
+	return (get_bool(&table->table_mutex, &table->end_cocking));
 }

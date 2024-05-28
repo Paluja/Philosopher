@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:47:07 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/23 18:21:18 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:46:37 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void philo_init(t_table *table)
 		philo->id = i + 1;
 		philo->meals_counter = 0;
 		philo->table = table;
+        safe_mutex_handle(&philo->philo_mutex, INIT);
 		assign_forks(philo,table->forks,i);
 		i++;
 	}
@@ -63,6 +64,7 @@ void data_init(t_table *table)
     table->philos = safe_malloc(table->philo_nbr * sizeof(t_philo));
     table->forks = safe_malloc(table->philo_nbr * sizeof(t_fork));
     safe_mutex_handle(&table->table_mutex,INIT);
+    safe_mutex_handle(&table->write_mutex,INIT);
     while (i < table->philo_nbr)
     {
         safe_mutex_handle(&table->forks[i].fork,INIT);

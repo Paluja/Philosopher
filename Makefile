@@ -49,7 +49,7 @@ AR = ar rcs
 # =========================================================================== #
 
 # Sources
-SRC_FILES = main utils parser init safe_controls dinner get_set
+SRC_FILES = main utils parser init safe_controls dinner get_set write synchro_utils
 
 #files
 SRCS = 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
