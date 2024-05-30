@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:32:50 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/30 15:44:30 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:55:44 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,12 @@ void    safe_mutex_handle(t_mutex *mutex, t_opcode opcode);
 void data_init(t_table *table);
 
 //DINNER
-void start_coocking(t_table *table);
+void	start_coocking(t_table *table);
+void 	thinking(t_philo *philo, bool flag);
 
 //syncro nosequie
 void wait_all_threads(t_table *table);
+void	des_synchronize(t_philo *philo);
 
 //MONITOR
 bool	all_threads_running(t_mutex *mutex, long *threads, long philo_nbr);
