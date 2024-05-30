@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:50:41 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/28 19:14:16 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:24:36 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int main(int ac, char **av)
         parser_input(table,av);
         data_init(table);
         start_coocking(table);
-
-        //clean
+        free_all(table);
     }
     else{
         error_exit("Bad arguments");

@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:50:35 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/28 19:20:23 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:23:55 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,24 @@ void p_usleep(long usec,t_table *table)//  usec/2 =====> rem/2
 				;
 		}
 	}
+}
+
+void free_all(t_table *table)
+{
+	t_philo	*philo;
+	int		i;
+	
+	i = 0;
+	while (table->philo_nbr < i)
+	{
+		philo = table->philos + i;
+		safe_mutex_handle(&philo->philo_mutex,DESTROY);
+		i++;
+	}
+	safe_mutex_handle(&table->write_mutex,DESTROY);
+	safe_mutex_handle(&table->table_mutex,DESTROY);
+	free(table->forks);
+	free(table->philos);
+	
+	
 }

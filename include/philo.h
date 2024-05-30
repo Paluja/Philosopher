@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:32:50 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/28 19:36:13 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:24:21 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,10 @@ typedef	struct	s_table
 	long	time_to_sleep;
 	long	limit_meals;
 	long	start_cocking;
+	long	threads_running_nbr;
 	bool	end_cocking;
 	bool	all_threads_ok; //para sincronizar los philos
+	pthread_t	monitor;
 	t_mutex	table_mutex; //evista los races mientras se esta leyendo la mesa
 	t_mutex	write_mutex;
 	t_fork	*forks;
@@ -103,7 +105,7 @@ typedef	struct	s_table
 }				t_table;
 
 
-# define DEBUG 0
+# define DEBUG 1
 
 
 // Colorines
@@ -121,6 +123,7 @@ typedef	struct	s_table
 void    error_exit(const char *str);
 long	gettime(t_time_code time_code);
 void p_usleep(long usec,t_table *table);
+void free_all(t_table *table);
 
 //WIRTE	
 void write_status(t_philo_status status, t_philo *philo, bool debug);
@@ -145,6 +148,12 @@ void start_coocking(t_table *table);
 
 //syncro nosequie
 void wait_all_threads(t_table *table);
+
+//MONITOR
+bool	all_threads_running(t_mutex *mutex, long *threads, long philo_nbr);
+void increase_long(t_mutex *mutex, long *value);
+void*   monitor_dinner(void *data);
+
 
 //SETTERS AND GETTERS ---> codigo mas leible
 void    set_bool(t_mutex *mutex, bool *dest, bool value);
