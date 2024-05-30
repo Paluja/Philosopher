@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:32:50 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/30 10:24:21 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:44:30 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef	struct	s_table
 }				t_table;
 
 
-# define DEBUG 1
+# define DEBUG 0
 
 
 // Colorines

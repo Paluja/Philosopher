@@ -6,7 +6,7 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:50:35 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/30 10:23:55 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:42:57 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,4 @@ void free_all(t_table *table)
 	safe_mutex_handle(&table->table_mutex,DESTROY);
 	free(table->forks);
 	free(table->philos);
-	
-	
 }
