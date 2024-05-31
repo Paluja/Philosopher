@@ -6,13 +6,11 @@
 /*   By: pjimenez <pjimenez@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:28:40 by pjimenez          #+#    #+#             */
-/*   Updated: 2024/05/28 19:35:33 by pjimenez         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:52:49 by pjimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-//para evitar estar todo el rato escribiendo lock y unlock
 
 void	set_bool(t_mutex *mutex, bool *dest, bool value)
 {
@@ -48,7 +46,7 @@ void	set_long(t_mutex *mutex, long *dest, long value)
 	safe_mutex_handle(mutex, UNLOCK);
 }
 
-bool simulation_finished(t_table *table)
+bool	simulation_finished(t_table *table)
 {
 	return (get_bool(&table->table_mutex, &table->end_cocking));
 }
